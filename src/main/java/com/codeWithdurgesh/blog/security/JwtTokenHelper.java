@@ -15,8 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenHelper {
 
-	
-	private static final long  JWT_TOKEN_VALIDITY= -2550185165626007488L;
+	private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
 	private String secret = "jwtToKenKey";
 
@@ -28,7 +27,7 @@ public class JwtTokenHelper {
 //retrieve expiration date from jwt token
 	public Date getExpirationDateFromToken(String token) {
 		return getClaimFromToken(token, Claims::getExpiration);
-	} 
+	}
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
@@ -70,5 +69,3 @@ public class JwtTokenHelper {
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 }
-
-

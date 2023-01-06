@@ -1,14 +1,7 @@
-package com.codeWithdurgesh.blog.entities;
+package com.codeWithdurgesh.blog.payloads;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class RoleDto {
 
-@Entity
-public class Role {
-
-	@Id
 	
 	private int id;
 	
@@ -29,7 +22,5 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 	
 }

@@ -1,9 +1,14 @@
 package com.codeWithdurgesh.blog.payloads;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import com.codeWithdurgesh.blog.entities.Role;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +33,8 @@ public class UserDto {
 	private String password;
 	@NotEmpty
 	private String about;
+	
+	private Set<RoleDto> roles = new HashSet<>();
 
 	public int getId() {
 		return id;
@@ -67,6 +74,14 @@ public class UserDto {
 
 	public void setAbout(String about) {
 		this.about = about;
+	}
+
+	public Set<RoleDto> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RoleDto> roles) {
+		this.roles = roles;
 	}
 	
 	

@@ -3,8 +3,10 @@ package com.codeWithdurgesh.blog.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.codeWithdurgesh.blog.security.CostomUserDetailService;
 import com.codeWithdurgesh.blog.security.JwtAuthenticationFilter;
@@ -19,7 +22,19 @@ import com.codeWithdurgesh.blog.security.JwtAuthonticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	public static final String[] PUBLIC_URLS= {
+			"/api/v1/auth/**",
+			"/v3/api-docs",
+			"/v2/api-docs",
+			"/swagger-resources/**",
+			"/swagger-ui/**",
+			"/webjars/**"
+			
+	};
 	
 	@Autowired
 	private CostomUserDetailService costomUserDetailService;
@@ -35,7 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.csrf()
 		.disable()
-		.authorizeRequests()
+		.authorizeHttpRequests()
+		.antMatchers(PUBLIC_URLS).permitAll()
+		.antMatchers(HttpMethod.GET).permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()
